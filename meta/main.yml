@@ -1,0 +1,28 @@
+#  <-- role dependencies
+galaxy_info:
+  author: kouji kojima
+  description: el7-init
+
+  Some suggested licenses:
+  - Apache
+  license: Apache License Version 2.0
+
+  min_ansible_version: 2.5.0
+
+  platforms:
+  - name: EL
+    versions:
+    - 7
+
+  galaxy_tags:
+    - EC2
+    - el7
+    - init
+    - locale
+    - timezone
+    - proxy
+    - CA
+    - SELinux
+    - firewalld
+
+dependencies: []
