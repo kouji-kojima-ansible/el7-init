@@ -35,7 +35,7 @@ cat << EOF > site.yml
     ca_url: https://xxxxxxxx.co.jp/xxx.ca
     ca_sha256: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx(*1)
   roles:
-    - { role: kouji-kojima.centos-rhel-ansible-galaxy }
+    - { role: kouji-kojima-ansible.el7-init }
 EOF
 ```
 
@@ -113,7 +113,7 @@ ansible-playbook -i production site.yml --private-key=/path/key.pem -vvv
 License
 -------
 
-[Apache License Version 2.0](https://github.com/kouji-kojima/centos-rhel-ansible-galaxy/blob/master/LICENSE)
+[Apache License Version 2.0](https://github.com/kouji-kojima-ansible/el7-init/blob/master/LICENSE)
 
 
 Author Information
