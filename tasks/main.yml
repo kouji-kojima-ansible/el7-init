@@ -4,9 +4,11 @@
 - name: set locale
   shell: localectl set-locale LANG=ja_JP.utf8
   when: ansible_env.LANG | default('') != 'ja_JP.utf8'
+
 - name: set timezone to Asia/Tokyo
   timezone:
     name: Asia/Tokyo
+
 - name: set proxy.sh
   template:
     force: yes
@@ -16,10 +18,12 @@
     group: root
     mode: 0644
   register: proxy_file
+
 - name: source proxy.sh
   shell: source /etc/profile.d/proxy.sh
   when:
   - proxy_file is changed
+
 - name: set yum proxy
   lineinfile:
     dest: /etc/yum.conf
@@ -27,11 +31,28 @@
     regexp: "^proxy=.*$"
     insertafter: EOF
     line: "proxy={{ http_proxy }}"
+
 - name: yum update
   yum:
     name: '*'
     state: latest
     skip_broken: yes
+
+- name: set rpm proxy
+  lineinfile:
+    dest:  /usr/lib/rpm/macros
+    state: present
+    regexp: "^#%_httpport*$"
+    insertafter: EOF
+    line: "%_httpport {{ proxy_port }}"
+
+- name: set rpm proxy
+  lineinfile:
+    dest:  /usr/lib/rpm/macros
+    state: present
+    regexp: "^#%_httpproxy*$"
+    insertafter: EOF
+    line: "%_httpproxy {{ proxy_host }}"
 
 # CA
 - name: set Local CA Certificate
@@ -41,6 +62,7 @@
     checksum: "sha256:{{ ca_sha256 }}"
     force: yes
   register: downloaded_ca
+
 - name: extract ca
   shell: update-ca-trust extract
   when:
@@ -53,17 +75,20 @@
     enabled: no
     daemon_reload: yes
   ignore_errors: yes
+
 - name: disabled SELinux
   replace:
     path: /etc/selinux/config
     regexp: "^SELINUX=enforcing$"
     replace: "SELINUX=disabled"
+
 - name: Password OK
   replace:
     path: /etc/ssh/sshd_config
     regexp: "^PasswordAuthentication no$"
     replace: "PasswordAuthentication yes"
   register: sshd_config
+
 - name: restart sshd
   systemd:
     name: sshd
