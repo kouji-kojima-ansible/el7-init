@@ -31,6 +31,7 @@
   yum:
     name: '*'
     state: latest
+    skip_broken: yes
 
 # CA
 - name: set Local CA Certificate
