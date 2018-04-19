@@ -38,21 +38,21 @@
     state: latest
     skip_broken: yes
 
-- name: set rpm proxy
-  lineinfile:
-    dest:  /usr/lib/rpm/macros
-    state: present
-    regexp: "^#%_httpport*$"
-    insertafter: EOF
-    line: "%_httpport {{ proxy_port }}"
-
-- name: set rpm proxy
+- name: set rpm proxy host
   lineinfile:
     dest:  /usr/lib/rpm/macros
     state: present
     regexp: "^#%_httpproxy*$"
     insertafter: EOF
     line: "%_httpproxy {{ proxy_host }}"
+
+- name: set rpm proxy port
+  lineinfile:
+    dest:  /usr/lib/rpm/macros
+    state: present
+    regexp: "^#%_httpport*$"
+    insertafter: EOF
+    line: "%_httpport {{ proxy_port }}"
 
 # CA
 - name: set Local CA Certificate
