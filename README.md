@@ -30,7 +30,8 @@ cat << EOF > site.yml
   remote_user: ec2-user
   sudo: yes
   vars:
-    http_proxy: http://proxy.xxxxxxxxx.co.jp:port_no/
+    proxy_host: proxy.xxxxxxxxx.co.jp
+    proxy_port: port_no
     no_proxys: xxxxx.co.jp,yyyy.co.jp
     ca_url: https://xxxxxxxx.co.jp/xxx.ca
     ca_sha256: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx(*1)
