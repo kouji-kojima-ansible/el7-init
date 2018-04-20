@@ -28,7 +28,7 @@ Please create site.yml as follows.
 cat << EOF > site.yml
 - hosts: servers
   remote_user: ec2-user
-  sudo: yes
+  become: yes
   vars:
     proxy_host: proxy.xxxxxxxxx.co.jp
     proxy_port: port_no
