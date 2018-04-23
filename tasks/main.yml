@@ -51,9 +51,9 @@
   lineinfile:
     dest: /etc/wgetrc
     state: present
-    regexp: "^{{ item }}=.*$"
+    regexp: "^{{ item }} = .*$"
     insertafter: EOF
-    line: "{{ item }}={{ http_proxy }}"
+    line: "{{ item }} = {{ http_proxy }}"
   with_items:
     - http_proxy
     - https_proxy
