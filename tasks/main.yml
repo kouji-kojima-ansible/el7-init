@@ -48,7 +48,7 @@
     mode: 0644
 
 # CA
-- name: set Local CA Certificate
+- name: get Local CA Certificate
   get_url:
     url: "{{ ca_url }}"
     dest: /etc/pki/ca-trust/source/anchors
