@@ -9,6 +9,7 @@
   timezone:
     name: Asia/Tokyo
 
+# proxy
 - name: set proxy.sh
   template:
     force: yes
