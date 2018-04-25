@@ -1,6 +1,6 @@
 #  <-- tasks file can include smaller files if warranted
 
-# init
+# set Japanese locale, timezone
 - name: set locale
   shell: localectl set-locale LANG=ja_JP.utf8
   when: ansible_env.LANG | default('') != 'ja_JP.utf8'
@@ -9,7 +9,7 @@
   timezone:
     name: Asia/Tokyo
 
-# proxy
+# set proxy
 - name: set proxy.sh
   template:
     force: yes
@@ -78,7 +78,7 @@
     - http.proxy
     - https.proxy
 
-# CA
+# Install CA
 - name: get Local CA Certificate
   get_url:
     url: "{{ ca_url }}"
@@ -93,7 +93,7 @@
   when:
   - downloaded_ca is changed
 
-# others
+# Disable firewalld, SELinux
 - name: disabled firewalld
   systemd:
     name: firewalld
