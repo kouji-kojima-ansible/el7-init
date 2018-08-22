@@ -1,6 +1,4 @@
-#  <-- tasks file can include smaller files if warranted
-
-# set Japanese locale, timezone
+# Japanese locale, timezone settings
 - name: set locale
   shell: localectl set-locale LANG=ja_JP.utf8
   when: ansible_env.LANG | default('') != 'ja_JP.utf8'
@@ -9,7 +7,7 @@
   timezone:
     name: Asia/Tokyo
 
-# set proxy
+# Proxy settings
 - name: set proxy.sh
   template:
     force: yes
@@ -33,11 +31,11 @@
     insertafter: EOF
     line: "proxy={{ http_proxy }}"
 
-- name: yum update
-  yum:
-    name: '*'
-    state: latest
-    skip_broken: yes
+#- name: yum update
+#  yum:
+#    name: '*'
+#    state: latest
+#    skip_broken: yes
 
 - name: set rpm proxy
   template:
@@ -78,8 +76,8 @@
     - http.proxy
     - https.proxy
 
-# Install CA
-- name: get Local CA Certificate
+# Local CA Certificate install
+- name: install Local CA Certificate
   get_url:
     url: "{{ ca_url }}"
     dest: /etc/pki/ca-trust/source/anchors
@@ -93,7 +91,7 @@
   when:
   - downloaded_ca is changed
 
-# Disable firewalld, SELinux
+# Firewalld disabled
 - name: disabled firewalld
   systemd:
     name: firewalld
@@ -101,12 +99,14 @@
     daemon_reload: yes
   ignore_errors: yes
 
+# SELinux disabled
 - name: disabled SELinux
   replace:
     path: /etc/selinux/config
     regexp: "^SELINUX=enforcing$"
     replace: "SELINUX=disabled"
 
+# SSH Password Connect OK
 - name: Password OK
   replace:
     path: /etc/ssh/sshd_config
